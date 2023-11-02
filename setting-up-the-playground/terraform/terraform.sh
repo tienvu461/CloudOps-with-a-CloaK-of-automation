@@ -94,4 +94,3 @@ elif [[ ${ACTION} = "apply" ]]; then
 else
     echo "Invalid action"
 fi
-
