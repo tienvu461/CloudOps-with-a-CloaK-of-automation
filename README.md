@@ -1,2 +1,2 @@
-# CloudOps-with-a-CloaK-of-automation
-CloudOps-with-a-CloaK-of-automation
+# CloudOps-with-a-touch-of-automation
+CloudOps-with-a-touch-of-automation
