@@ -46,3 +46,4 @@ runcmd:
  - echo "Changing Hostname"
  - hostname "${var.app}-${var.env}-demobox"
  - echo "${var.app}-${var.env}-demobox" > /etc/hostname
+ 

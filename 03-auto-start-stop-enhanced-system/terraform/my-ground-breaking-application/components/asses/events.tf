@@ -3,7 +3,7 @@ resource "aws_lambda_permission" "asses_function" {
   action        = "lambda:InvokeFunction"
   function_name = aws_lambda_function.asses_function.function_name
   principal     = "events.amazonaws.com"
-  source_arn    = "arn:aws:events:ap-southeast-1:372467991812:*"
+  source_arn    = "arn:aws:events:ap-southeast-1:${data.aws_caller_identity.current.account_id}:*"
 }
 
 ## EOB ##

@@ -46,3 +46,4 @@ runcmd:
  - echo "Changing Hostname"
  - hostname "${local.prefix}-demobox"
  - echo "${local.prefix}-demobox" > /etc/hostname
+ 
