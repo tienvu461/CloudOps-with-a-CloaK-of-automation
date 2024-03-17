@@ -1,0 +1,22 @@
+{
+    "Records": [
+        {
+            "EventSource": "aws:sns",
+            "EventVersion": "1.0",
+            "EventSubscriptionArn": "arn:aws:sns:us-east-1:012345678901:my-ground-breaking-app-monitoring-noti:dummy",
+            "Sns": {
+                "Type": "Notification",
+                "MessageId": "dummy",
+                "TopicArn": "arn:aws:sns:us-east-1:012345678901:my-ground-breaking-app-monitoring-noti",
+                "Subject": null,
+                "Message": "{\"version\":\"0\",\"id\":\"99ddbf50-e9af-8d91-6ef2-67389f0d6d04\",\"detail-type\":\"ECS Deployment State Change\",\"source\":\"aws.ecs\",\"account\":\"012345678901\",\"time\":\"2023-10-22T13:20:44Z\",\"region\":\"us-east-1\",\"resources\":[\"arn:aws:ecs:us-east-1:012345678901:service/my-ground-breaking-app/my-ground-breaking-app\"],\"detail\":{\"eventType\":\"INFO\",\"eventName\":\"SERVICE_DEPLOYMENT_COMPLETED\",\"deploymentId\":\"ecs-svc/1555338688056245809\",\"updatedAt\":\"2023-10-22T13:19:01.798Z\",\"reason\":\"ECS deployment ecs-svc/1555338688056245809 completed.\"}}",
+                "Timestamp": "2023-10-22T13:20:45.917Z",
+                "SignatureVersion": "1",
+                "Signature": "dummy",
+                "SigningCertUrl": "https://sns.us-east-1.amazonaws.com/dummy.pem",
+                "UnsubscribeUrl": "https://sns.us-east-1.amazonaws.com/?Action=Unsubscribe&SubscriptionArn=arn:aws:sns:us-east-1:012345678901:my-ground-breaking-app-monitoring-noti:dummy",
+                "MessageAttributes": {}
+            }
+        }
+    ]
+}

@@ -1,0 +1,48 @@
+#cloud-config
+package_update: true
+package_upgrade: true
+
+cloud_final_modules:
+ - scripts-per-boot
+
+users:
+  - default
+  - name: 'jumpbox'
+    groups: wheel
+    sudo: ALL=(ALL) NOPASSWD:ALL
+    shell: /bin/bash
+    lock_passwd: true
+    ssh_authorized_keys:
+      - 'ssh-ed25519 pleaseReplaceThisWithYourPrivateKey jumpbox@jumpbox'
+
+write_files:
+- owner: root:root
+  path: /var/lib/cloud/scripts/per-boot/update_dns.sh
+  permissions: '0744'
+  content: |
+    #!/bin/bash
+    # Extract information about the Instance
+    echo "Updating jumpbox record"
+    status_code=$(curl -s -o /dev/null -w "%{http_code}" http://169.254.169.254/latest/meta-data/)
+    if [[ "$status_code" -eq 200 ]]
+    then
+        INSTANCE_ID=$(curl -s http://169.254.169.254/latest/meta-data/instance-id/)
+        AZ=$(curl -s http://169.254.169.254/latest/meta-data/placement/availability-zone/)
+        MY_IP=$(curl -s http://169.254.169.254/latest/meta-data/public-ipv4/)
+    else
+        TOKEN=`curl -s -X PUT "http://169.254.169.254/latest/api/token" -H "X-aws-ec2-metadata-token-ttl-seconds: 21600"`
+        INSTANCE_ID=$(curl -s -H "X-aws-ec2-metadata-token: $TOKEN" http://169.254.169.254/latest/meta-data/instance-id/)
+        AZ=$(curl -s -H "X-aws-ec2-metadata-token: $TOKEN" http://169.254.169.254/latest/meta-data/placement/availability-zone/)
+        MY_IP=$(curl -s -H "X-aws-ec2-metadata-token: $TOKEN" http://169.254.169.254/latest/meta-data/public-ipv4/)
+    fi
+    # Extract tags associated with instance
+    ZONE_TAG=$(aws ec2 describe-tags --region ${AZ::-1} --filters "Name=resource-id,Values=${INSTANCE_ID}" --query 'Tags[?Key==`AUTO_DNS_ZONE`].Value' --output text)
+    NAME_TAG=$(aws ec2 describe-tags --region ${AZ::-1} --filters "Name=resource-id,Values=${INSTANCE_ID}" --query 'Tags[?Key==`AUTO_DNS_NAME`].Value' --output text)
+
+    # Update Route 53 Record Set based on the Name tag to the current Public IP address of the Instance
+    aws route53 change-resource-record-sets --hosted-zone-id $ZONE_TAG --change-batch '{"Changes":[{"Action":"UPSERT","ResourceRecordSet":{"Name":"'$NAME_TAG'","Type":"A","TTL":300,"ResourceRecords":[{"Value":"'$MY_IP'"}]}}]}'
+
+runcmd:
+ - echo "Changing Hostname"
+ - hostname "${local.prefix}-jumpbox"
+ - echo "${local.prefix}-jumpbox" > /etc/hostname

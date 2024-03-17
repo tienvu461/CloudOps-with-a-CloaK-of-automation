@@ -1,0 +1,15 @@
+{
+    "version":"0",
+    "id":"5cc136bc-bec2-a63b-8a51-2c30ef8e90a9",
+    "detail-type":"Scheduled Event",
+    "source":"aws.events",
+    "account":"123456789012",
+    "time":"2024-03-16T16:18:00Z",
+    "region":"ap-southeast-1",
+    "resources":[
+       "arn:aws:events:ap-southeast-1:123456789012:rule/EOB_Event_18h"
+    ],
+    "detail":{
+       
+    }
+}

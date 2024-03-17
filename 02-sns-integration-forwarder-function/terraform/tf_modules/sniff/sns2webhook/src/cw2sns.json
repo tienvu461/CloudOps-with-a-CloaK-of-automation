@@ -1,0 +1,22 @@
+{
+    "Records": [
+        {
+            "EventSource": "aws:sns",
+            "EventVersion": "1.0",
+            "EventSubscriptionArn": "arn:aws:sns:us-east-1:012345678901:my-ground-breaking-app-monitoring-noti:dummy",
+            "Sns": {
+                "Type": "Notification",
+                "MessageId": "dummy",
+                "TopicArn": "arn:aws:sns:us-east-1:012345678901:my-ground-breaking-app-monitoring-noti",
+                "Subject": "ALARM: \"my-ground-breaking-app-unhealthy-http5xx-composite\" in US East (N. Virginia)",
+                "Message": "{\"AlarmName\":\"my-ground-breaking-app-unhealthy-http5xx-composite\",\"AlarmDescription\":\"Unhealthy Host with HTTP 5xx, check your application\",\"AWSAccountId\":\"012345678901\",\"NewStateValue\":\"ALARM\",\"NewStateReason\":\"arn:aws:cloudwatch:us-east-1:012345678901:alarm:my-ground-breaking-app-healthy-tg-1 transitioned to ALARM at Tuesday 17 October, 2023 13:25:14 UTC\",\"StateChangeTime\":\"2023-10-17T13:25:14.506+0000\",\"Region\":\"US East (N. Virginia)\",\"AlarmArn\":\"arn:aws:cloudwatch:us-east-1:012345678901:alarm:my-ground-breaking-app-unhealthy-http5xx-composite\",\"OKActions\":[],\"AlarmActions\":[\"arn:aws:sns:us-east-1:012345678901:my-ground-breaking-app-monitoring-noti\"],\"InsufficientDataActions\":[],\"OldStateValue\":\"OK\",\"AlarmRule\":\"ALARM(my-ground-breaking-app-healthy-tg-1) AND ALARM(my-ground-breaking-app-http-5xx)\",\"TriggeringChildren\":[{\"Arn\":\"arn:aws:cloudwatch:us-east-1:012345678901:alarm:my-ground-breaking-app-healthy-tg-1\",\"State\":{\"Value\":\"ALARM\",\"Timestamp\":\"2023-10-17T13:25:14.506+0000\"}},{\"Arn\":\"arn:aws:cloudwatch:us-east-1:012345678901:alarm:my-ground-breaking-app-http-5xx\",\"State\":{\"Value\":\"ALARM\",\"Timestamp\":\"2023-10-17T13:24:45.551+0000\"}}]}",
+                "Timestamp": "2023-10-17T13:25:14.614Z",
+                "SignatureVersion": "1",
+                "Signature": "dummy",
+                "SigningCertUrl": "https://sns.us-east-1.amazonaws.com/dummy.pem",
+                "UnsubscribeUrl": "https://sns.us-east-1.amazonaws.com/?Action=Unsubscribe&SubscriptionArn=arn:aws:sns:us-east-1:012345678901:my-ground-breaking-app-monitoring-noti:b3de416f-0435-429b-91d8-35f6c1810e15",
+                "MessageAttributes": {}
+            }
+        }
+    ]
+}
