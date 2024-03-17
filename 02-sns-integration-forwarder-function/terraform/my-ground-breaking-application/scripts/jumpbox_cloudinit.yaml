@@ -7,13 +7,13 @@ cloud_final_modules:
 
 users:
   - default
-  - name: 'demo'
+  - name: 'jumpbox'
     groups: wheel
     sudo: ALL=(ALL) NOPASSWD:ALL
     shell: /bin/bash
     lock_passwd: true
     ssh_authorized_keys:
-      - 'ssh-ed25519 pleaseReplaceThisWithYourPrivateKey demo@jumpbox'
+      - 'ssh-ed25519 pleaseReplaceThisWithYourPrivateKey jumpbox@jumpbox'
 
 write_files:
 - owner: root:root
