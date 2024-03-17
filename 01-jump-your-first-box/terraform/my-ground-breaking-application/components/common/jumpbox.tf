@@ -90,7 +90,7 @@ resource "aws_iam_role_policy" "jumpbox_policy" {
       {
         "Effect": "Allow",
         "Action": "route53:ChangeResourceRecordSets",
-        "Resource": "${data.aws_route53_zone.tienvv.arn}"
+        "Resource": "${data.aws_route53_zone.yourdns.arn}"
       }
     ]
 }

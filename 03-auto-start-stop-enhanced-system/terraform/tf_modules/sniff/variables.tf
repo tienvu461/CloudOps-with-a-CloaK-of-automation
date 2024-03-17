@@ -1,4 +1,4 @@
-variable "name_prefix" { default = "" }
+variable "prefix" { default = "" }
 variable "common_tags" { default = {} }
 
 variable "lambda_handler" { default = "main.lambda_handler" }

@@ -13,7 +13,7 @@ users:
     shell: /bin/bash
     lock_passwd: true
     ssh_authorized_keys:
-      - 'ssh-ed25519 pleaseReplaceThisWithYourPrivateKey demo@demobox'
+      - 'ssh-ed25519 pleaseReplaceThisWithYourPrivateKey demo@jumpbox'
 
 write_files:
 - owner: root:root
@@ -22,7 +22,7 @@ write_files:
   content: |
     #!/bin/bash
     # Extract information about the Instance
-    echo "Updating demobox record"
+    echo "Updating jumpbox record"
     status_code=$(curl -s -o /dev/null -w "%{http_code}" http://169.254.169.254/latest/meta-data/)
     if [[ "$status_code" -eq 200 ]]
     then
@@ -44,6 +44,5 @@ write_files:
 
 runcmd:
  - echo "Changing Hostname"
- - hostname "${local.prefix}-demobox"
- - echo "${local.prefix}-demobox" > /etc/hostname
- 
+ - hostname "${var.app}-${var.env}-jumpbox"
+ - echo "${var.app}-${var.env}-jumpbox" > /etc/hostname

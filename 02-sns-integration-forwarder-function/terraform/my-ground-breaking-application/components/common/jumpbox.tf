@@ -14,27 +14,27 @@ data "aws_ami" "al2023_latest" {
   owners = ["137112412989"] # Canonical
 }
 
-data "cloudinit_config" "demobox_cloudinit" {
+data "cloudinit_config" "jumpbox_cloudinit" {
   gzip          = true
   base64_encode = true
   part {
     content_type = "text/cloud-config"
-    content      = file("${path.module}/../../scripts/demobox_cloudinit.yaml")
+    content      = file("${path.module}/../../scripts/jumpbox_cloudinit.yaml")
   }
 }
 
-resource "aws_instance" "demobox" {
+resource "aws_instance" "jumpbox" {
   ami                         = data.aws_ami.al2023_latest.id
   availability_zone           = "${var.aws_region}a"
   ebs_optimized               = false
   instance_type               = "t3a.micro"
   monitoring                  = false
-  key_name                    = "demobox"
+  key_name                    = "jumpbox"
   subnet_id                   = module.vpc.public_subnets[0]
   vpc_security_group_ids      = [aws_security_group.ssh.id]
   associate_public_ip_address = true
   source_dest_check           = true
-  iam_instance_profile        = aws_iam_instance_profile.demobox_role.name
+  iam_instance_profile        = aws_iam_instance_profile.jumpbox_role.name
 
   root_block_device {
     volume_type           = "gp3"
@@ -43,21 +43,21 @@ resource "aws_instance" "demobox" {
     tags                  = local.common_tags
   }
 
-  user_data = data.cloudinit_config.demobox_cloudinit.rendered
+  user_data = data.cloudinit_config.jumpbox_cloudinit.rendered
   tags = {
-    "Name"          = "${local.prefix}-demobox"
+    "Name"          = "${local.prefix}-jumpbox"
     "AUTO_DNS_ZONE" = "YOURZONEID"
-    "AUTO_DNS_NAME" = "demobox.example.com"
+    "AUTO_DNS_NAME" = "jumpbox.example.com"
   }
 }
 
-resource "aws_iam_instance_profile" "demobox_role" {
-  name = "${local.prefix}-demobox-role"
-  role = aws_iam_role.demobox_role.name
+resource "aws_iam_instance_profile" "jumpbox_role" {
+  name = "${local.prefix}-jumpbox-role"
+  role = aws_iam_role.jumpbox_role.name
 }
 
-resource "aws_iam_role" "demobox_role" {
-  name               = "${local.prefix}-demobox-role"
+resource "aws_iam_role" "jumpbox_role" {
+  name               = "${local.prefix}-jumpbox-role"
   assume_role_policy = <<POLICY
 {
   "Version": "2012-10-17",
@@ -74,9 +74,9 @@ resource "aws_iam_role" "demobox_role" {
 POLICY
 }
 
-resource "aws_iam_role_policy" "demobox_policy" {
-  name = "${local.prefix}-demobox-policy"
-  role = aws_iam_role.demobox_role.id
+resource "aws_iam_role_policy" "jumpbox_policy" {
+  name = "${local.prefix}-jumpbox-policy"
+  role = aws_iam_role.jumpbox_role.id
 
   policy = <<POLICY
 {
@@ -90,7 +90,7 @@ resource "aws_iam_role_policy" "demobox_policy" {
       {
         "Effect": "Allow",
         "Action": "route53:ChangeResourceRecordSets",
-        "Resource": "${data.aws_route53_zone.tienvv.arn}"
+        "Resource": "${data.aws_route53_zone.yourdns.arn}"
       }
     ]
 }

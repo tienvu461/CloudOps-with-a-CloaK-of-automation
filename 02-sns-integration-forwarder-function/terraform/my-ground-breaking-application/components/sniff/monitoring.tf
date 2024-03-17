@@ -74,7 +74,7 @@ data "aws_iam_policy_document" "this" {
 
 module "sns2webhook_noti_forwarder" {
   source      = "../../tf_modules/sniff"
-  name_prefix = var.prefix
+  prefix      = var.prefix
   common_tags = local.common_tags
 
   forwarder_type = "sns2webhook"

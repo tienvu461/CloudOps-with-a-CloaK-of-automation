@@ -3,14 +3,14 @@
 ``` tf
 module "sns2webhook_noti_forwarder" {
   source      = "../../../../tf_modules/aws-noti-forwarder"
-  name_prefix = local.name_prefix
+  prefix      = local.prefix
   common_tags = local.common_tags
 
   forwarder_type = "sns2webhook"
   python_runtime = "python3.9"
   lambda_environments = {
     "ENV"         = "dev"
-    "APP"     = "powertech"
+    "APP"         = "powertech"
     "WEBHOOK_URL" = "https://webhook.example.com"
   }
 }
