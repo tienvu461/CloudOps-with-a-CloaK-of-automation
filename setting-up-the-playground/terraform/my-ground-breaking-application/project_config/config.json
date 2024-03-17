@@ -1,7 +1,0 @@
-{
-    "project": "my-ground-breaking-application",
-    "aws_region": "ap-southeast-1",
-    "aws_profile": "my-ground-breaking-application-dev",
-    "tf_version": "1.4.6",
-    "s3_backend_bucket": "my-ground-breaking-application-dev-terraform"
-}
